@@ -73,15 +73,7 @@ public class PlayerMovement : MonoBehaviour
         DoLocomotion();
     }
 
-    // float GetPelvisHeightFromGround(){
-    //     if(Physics.Raycast(pelvisPosition.position, Vector3.down, out groundHit, Mathf.Infinity, levelMask)){
-    //         //Debug.DrawLine(pelvisPosition.position, Vector3.down, Color.green, Time.deltaTime);
-    //         print((groundHit.point - pelvisPosition.position).magnitude);
-    //         return ((groundHit.point - pelvisPosition.position).magnitude);
-    //     }
-    //     return -1;
-    // }
-
+    //return height from ground, -1 if ground not found
     float GetPelvisHeightFromGround(){
         if(Physics.Raycast(transform.position, Vector3.down, out groundHit, Mathf.Infinity, levelMask)){
             //Debug.DrawLine(pelvisPosition.position, Vector3.down, Color.green, Time.deltaTime);
@@ -101,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+    //solve position for hip under the object detected
     void SolveHipPosition(){
         int i =0;
         float heightAtNoObstacle = 0f;
@@ -163,20 +156,17 @@ public class PlayerMovement : MonoBehaviour
             currentStandingPelvisHeightMin = standingPelvisHeightMin;
         }
         float pelvisHeightFromGround = GetPelvisHeightFromGround();
-        if(pelvisHeightFromGround > currentStandingPelvisHeightMax){  //ideal value 1.01
+        if(pelvisHeightFromGround > currentStandingPelvisHeightMax){  
             verticalVelocity -= gravity * Time.deltaTime;
             verticalVelocity = Mathf.Clamp(verticalVelocity,-Mathf.Infinity, 0f);
-            print("gravity");
         }
-        else if(pelvisHeightFromGround < currentStandingPelvisHeightMin){  //ideal value 0.95
+        else if(pelvisHeightFromGround < currentStandingPelvisHeightMin){  
             verticalVelocity += pelvisSpringForce * Time.deltaTime; //this implementation does not work for no ground underneath
             verticalVelocity = Mathf.Clamp(verticalVelocity, 0f, Mathf.Infinity);
-            print("pelvis force");
         }
         else 
         {
             verticalVelocity = 0f;
-            print("done nothing");
         }
         moveDirection.y = verticalVelocity;
        

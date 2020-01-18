@@ -238,7 +238,6 @@ public class PlayerAnimation : MonoBehaviour
         while(Physics.SphereCast(headForwardRay, 0.15f, out obstacleInfo, 2f, levelLayer) && obstacleInfo.transform.tag == "Obstacle"){
             headForwardRay = new Ray(new Vector3(head.position.x, head.position.y - 0.05f, head.position.z), transform.forward);
             heightAtNoObstacle -= 0.05f;
-            //headSolvedPosition = obstacleInfo.point - head.position;
             headSolvedPosition = new Vector3(0f, head.position.y - heightAtNoObstacle, 0f);
             headSolvedPosition.x = headSolvedPosition.z = 0f;
             //Debug.DrawLine(head.position, head.position - headSolvedPosition, Color.green, 0);
@@ -259,14 +258,12 @@ public class PlayerAnimation : MonoBehaviour
         while(Physics.SphereCast(headForwardRay, 0.15f, out obstacleInfo, 2f, levelLayer) && obstacleInfo.transform.tag == "Obstacle"){
             headForwardRay = new Ray(new Vector3(head.position.x, head.position.y - 0.05f, head.position.z), transform.forward);
             heightAtNoObstacle -= 0.05f;
-            //headSolvedPosition = obstacleInfo.point - head.position;
             chestSolvedPosition = new Vector3(0f, head.position.y - heightAtNoObstacle, 0f);
             headSolvedPosition.x = headSolvedPosition.z = 0f;
             //Debug.DrawLine(head.position, head.position - headSolvedPosition, Color.green, 0);
             //arbitrary counts of recursion
             i++;
             if(i>2){ 
-                //chestSolvedPosition = Vector3.zero;
                 return;
             }    
         }
@@ -295,5 +292,4 @@ public class PlayerAnimation : MonoBehaviour
             crouching = false;
         }
     }
-
 }
